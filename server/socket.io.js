@@ -1,0 +1,52 @@
+
+import express from 'express';
+import http from "http"
+import { Server } from "socket.io"
+
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:5173",
+        methods: ["GET", "POST"]
+    }
+});
+
+const socketUsers = new Map()
+
+export const findSocketIdByUserId = (reciverId) => {
+    return socketUsers.get(reciverId)
+}
+
+io.on('connection', (socket) => {
+    console.log(`a user user conected on id ${socket.id}`);
+
+    const { userId } = socket.handshake.query
+    if (userId) {
+        socketUsers.set(userId, socket.id)
+    }
+
+
+    io.emit('connectedUser', Array.from(socketUsers.keys()))
+
+    socket.on('sendMessage', ({ reciverId, message }) => {
+
+        const reciverSocketId = socketUsers.get(reciverId)
+        if (reciverSocketId) {
+            io.to(reciverSocketId).emit('newMessage', message)
+        }
+
+    })
+
+    socket.on('disconnect', () => {
+        if (userId) {
+            console.log('user disConnect');
+            socketUsers.delete(userId)
+        }
+    })
+
+
+})
+
+export { io, app, server }
