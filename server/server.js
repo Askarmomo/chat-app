@@ -12,8 +12,8 @@ dotenv.config()
 
 app.use(express.json())
 app.use(cors({
-    origin: "https://chat-r2apes06f-askars-projects-111a8034.vercel.app",
-    credentials: true,
+    origin: "http://localhost:5173",
+    credentials: true
 }))
 app.use(cookieParser())
 
