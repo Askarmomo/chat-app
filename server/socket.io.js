@@ -10,7 +10,7 @@ const io = new Server(server, {
     cors: {
         origin: "https://chat-app-tawny-chi.vercel.app",
         methods: ["GET", "POST"]
-    });
+    }});
 
 const socketUsers = new Map()
 console.log(Array.from(socketUsers.keys()));
