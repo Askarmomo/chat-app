@@ -13,6 +13,7 @@ const MessageStore = create((set, get) => ({
     reciverUserData: null,
     isFetchedMessage: false,
     onlineUsers: [],
+
     addMessage: (socketMessage) => {
         set((state) =>
             ({ messages: [...state.messages, socketMessage], })
@@ -31,12 +32,11 @@ const MessageStore = create((set, get) => ({
 
             if (data) {
                 set({ messages: data })
-                set({ isFetched: true })
             }
 
         } catch (error) {
             if (error.response) {
-                toast.error(error.response.data.error)
+                toast(error.response.data.error, { icon: '🤷‍♂️', });
             }
         }
 

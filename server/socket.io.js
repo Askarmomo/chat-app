@@ -14,6 +14,7 @@ const io = new Server(server, {
 });
 
 const socketUsers = new Map()
+console.log(Array.from(socketUsers.keys()));
 
 export const findSocketIdByUserId = (reciverId) => {
     return socketUsers.get(reciverId)
@@ -43,6 +44,7 @@ io.on('connection', (socket) => {
         if (userId) {
             console.log('user disConnect');
             socketUsers.delete(userId)
+            io.emit('connectedUser', Array.from(socketUsers.keys()))
         }
     })
 

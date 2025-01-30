@@ -1,6 +1,6 @@
 import express from "express"
 import authenticate from "../middleware/authenticate.js";
-import { getAllUsers, getUserProfile, login, singup } from "../controllers/authController.js";
+import { getAllUsers, getUserProfile, login, logout, singup } from "../controllers/authController.js";
 const authRoute = express.Router();
 
 
@@ -12,5 +12,7 @@ authRoute.post('/login', login);
 authRoute.get('/userprofile', authenticate, getUserProfile);
 
 authRoute.get('/alluser', authenticate, getAllUsers)
+
+authRoute.post('/logout', authenticate, logout)
 
 export default authRoute

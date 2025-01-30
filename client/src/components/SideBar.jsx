@@ -5,13 +5,14 @@ import SocketStore from "../Store/Socket.io.Store"
 
 const SideBar = () => {
 
-    const { allUser, user } = AuthStore()
-    const { setReciverId, getReciverUserData, messages } = MessageStore()
+    const { allUser, user, logout } = AuthStore()
+    const { setReciverId, getReciverUserData } = MessageStore()
     const { onlineUsers } = SocketStore()
 
-    const lastMessage = messages.pop()
-    console.log(lastMessage);
 
+    const logoutFunc = async () => {
+        await logout()
+    }
 
     return (
         <div className=" basis-[400px] border-r border-r-slate-300 overflow-auto" style={{ scrollbarWidth: "none" }}>
@@ -29,8 +30,8 @@ const SideBar = () => {
                     </div>
                 </div>
 
-                <div className=" hover:bg-slate-200 hover:bg-opacity-20 cursor-pointer rounded-full p-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"></path><path fill="currentColor" d="M12 17a2 2 0 1 1 0 4a2 2 0 0 1 0-4m0-7a2 2 0 1 1 0 4a2 2 0 0 1 0-4m0-7a2 2 0 1 1 0 4a2 2 0 0 1 0-4"></path></g></svg>
+                <div onClick={logoutFunc} className=" hover:bg-red-400 hover:bg-opacity-20 cursor-pointer rounded-full p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 20.75H6a2.64 2.64 0 0 1-2.75-2.53V5.78A2.64 2.64 0 0 1 6 3.25h3a.75.75 0 0 1 0 1.5H6a1.16 1.16 0 0 0-1.25 1v12.47a1.16 1.16 0 0 0 1.25 1h3a.75.75 0 0 1 0 1.5Zm7-4a.74.74 0 0 1-.53-.22a.75.75 0 0 1 0-1.06L18.94 12l-3.47-3.47a.75.75 0 1 1 1.06-1.06l4 4a.75.75 0 0 1 0 1.06l-4 4a.74.74 0 0 1-.53.22"></path><path fill="currentColor" d="M20 12.75H9a.75.75 0 0 1 0-1.5h11a.75.75 0 0 1 0 1.5"></path></svg>
                 </div>
             </div>
 

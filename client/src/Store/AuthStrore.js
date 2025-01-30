@@ -63,7 +63,7 @@ const AuthStore = create((set, get) => ({
 
         } catch (error) {
             if (error.response) {
-                toast.error(error.response.data.error)
+                console.log(error.response.data.error)
             }
         }
     },
@@ -80,6 +80,21 @@ const AuthStore = create((set, get) => ({
             }
         }
     },
+    logout: async () => {
+
+        try {
+            const res = await api.post('/api/auth/logout')
+            const data = await res.data
+            if (data) {
+                set({ user: null })
+            }
+            location.reload()
+        } catch (error) {
+            if (error.response) {
+                toast.error(error.response.data.error)
+            }
+        }
+    }
 
 }))
 

@@ -33,6 +33,13 @@ const SocketStore = create((set, get) => ({
 
         // Return a cleanup function to disconnect the socket
         return () => {
+            newSocket.on('newMessage', (message) => {
+                console.log('Message:', message);
+
+                // Append the new message to the existing array
+                MessageStore.getState().addMessage(message);
+            });
+
             newSocket.disconnect();
             console.log('Disconnected from server');
             set({ socket: null, onlineUsers: [] }); // Reset the state

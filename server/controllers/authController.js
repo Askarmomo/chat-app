@@ -2,6 +2,7 @@ import { generateToken } from "../genarateToken.js";
 import User from "../models/userSchema.js";
 import bcrypt from "bcryptjs";
 
+
 export const singup = async (req, res) => {
 
     try {
@@ -99,6 +100,21 @@ export const getAllUsers = async (req, res) => {
         console.log('Error in alluser', error.message);
         res.status(500).json({ message: "Internal server error" })
 
+    }
+
+}
+
+export const logout = async (req, res) => {
+
+    try {
+        if (req.user) {
+            res.clearCookie("token")
+            res.status(200).send('Logged out successfully');
+        }
+
+    } catch (error) {
+        console.log('Error in logout', error.message);
+        res.status(500).json({ message: "Internal server error" })
     }
 
 }
