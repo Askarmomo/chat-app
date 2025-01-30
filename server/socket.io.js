@@ -8,9 +8,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://chat-app-tawny-chi.vercel.app",
+        origin: "http://localhost:5173",
         methods: ["GET", "POST"]
-    }});
+    }
+});
 
 const socketUsers = new Map()
 console.log(Array.from(socketUsers.keys()));
