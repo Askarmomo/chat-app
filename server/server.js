@@ -12,7 +12,7 @@ dotenv.config()
 
 app.use(express.json())
 app.use(cors({
-    origin: "https://chat-app-36uv.onrender.com",
+    origin: "https://chat-app-tawny-chi.vercel.app",
     credentials: true
 }))
 app.use(cookieParser())
