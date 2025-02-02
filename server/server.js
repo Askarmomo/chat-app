@@ -7,19 +7,29 @@ import cors from "cors"
 import cookieParser from "cookie-parser";
 import messageRoute from "./routes/messageRoutes.js";
 import { app, server } from "./socket.io.js";
+import path from "path"
+
+
 
 dotenv.config()
+const __dirname = path.resolve()
 
 app.use(express.json())
 app.use(cors({
-    origin: "https://chat-app-client-iota.vercel.app",
+    origin: "http://localhost:5173",
     credentials: true
 }))
 app.use(cookieParser())
 
+
 app.use('/api/auth', authRoute)
 app.use('/api/message', messageRoute)
 
+app.use(express.static(path.join(__dirname, "/client/dist")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "dist", "index.html"))
+})
 
 server.listen(3000, () => {
     console.log('Server running on port 3000')
