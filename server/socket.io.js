@@ -9,8 +9,12 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "https://chat-app-client-iota.vercel.app",
+<<<<<<< HEAD
         methods: ["GET", "POST"],
         credentials: true
+=======
+        methods: ["GET", "POST"]
+>>>>>>> 682f9dc9a9555d2bdf07371e89058e4db8a3c7a8
     }
 });
 
