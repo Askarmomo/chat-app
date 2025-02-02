@@ -9,7 +9,7 @@ const SocketStore = create((set, get) => ({
         set({ onlineUsers: onlineUsers })
     },
     connectSocket: (userId) => {
-        const newSocket = io('https://chat-app-62sm.onrender.com', {
+        const newSocket = io('http://chat-app-62sm.onrender.com', {
             query: {
                 userId,
             },
