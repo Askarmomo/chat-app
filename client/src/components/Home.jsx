@@ -1,10 +1,11 @@
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import SideBar from "./SideBar"
 import AuthStore from "../Store/AuthStrore"
 import MessageStore from "../Store/MessageStore"
 import { formateTime } from "../middlewares/TimeFormater"
 import SocketStore from "../Store/Socket.io.Store"
+import { Link } from "react-router-dom"
 
 
 
@@ -26,21 +27,28 @@ const Home = () => {
         }
     }, [messages])
 
+    const [show, setShow] = useState(false)
+
     return (
         <div >
-            <div className=" flex backdrop-blur-xl min-h-screen h-[599px]">
-                <SideBar />
+            <div className=" flex flex-initial backdrop-blur-xl min-h-screen h-[599px]">
+                <SideBar setShow={setShow} show={show} />
 
                 {
-                    reciverUserData ? <div className=" w-full relative">
+                    reciverUserData ? <div className={`w-full ${show ? "block sm:block" : "hidden sm:block"} relative`}>
 
                         <div>
                             <div className=" flex justify-between items-center px-4 py-2 border-b border-b-slate-300">
-                                <div className=" flex items-center space-x-4">
-                                    <img className=" h-12 w-12 rounded-full object-cover bg-white" src={reciverUserData?.profilePic} alt={reciverUserData?.username} />
-                                    <div>
-                                        <div className=" font-semibold">{reciverUserData?.username}</div>
-                                        <div className=" font-light">{onlineUsers.includes(reciverUserData._id) ? 'Online' :'Ofline'}</div>
+                                <div className=" flex items-center space-x-2">
+                                    <Link onClick={() => setShow(false)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="m6.921 12.5l5.439 5.439q.146.146.153.344q.006.198-.16.363q-.164.16-.353.163q-.188.002-.354-.163l-6.08-6.08q-.131-.132-.184-.268T5.329 12t.053-.298t.184-.267l6.08-6.081q.14-.14.341-.15q.202-.01.367.15q.165.165.165.356q0 .192-.165.357L6.92 11.5H18.5q.214 0 .357.143T19 12t-.143.357t-.357.143z"></path></svg>
+                                    </Link>
+                                    <div className=" flex items-center space-x-4">
+                                        <img className=" h-12 w-12 rounded-full object-cover bg-white" src={reciverUserData?.profilePic} alt={reciverUserData?.username} />
+                                        <div>
+                                            <div className=" font-semibold">{reciverUserData?.username}</div>
+                                            <div className=" font-light">{onlineUsers.includes(reciverUserData._id) ? 'Online' : 'Ofline'}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className=" hover:bg-slate-200 hover:bg-opacity-20 cursor-pointer rounded-full p-2">
@@ -78,7 +86,7 @@ const Home = () => {
 
                     </div>
                         :
-                        <div className=" text-xl font-semibold text-center w-full pt-[300px]">
+                        <div className={`text-xl hidden sm:block font-semibold text-center w-full pt-[300px]`}>
                             Select Some One To Message
                         </div>
                 }

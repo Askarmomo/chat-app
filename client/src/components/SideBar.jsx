@@ -1,9 +1,10 @@
 import AuthStore from "../Store/AuthStrore"
 import MessageStore from "../Store/MessageStore"
 import SocketStore from "../Store/Socket.io.Store"
+import PropTypes from "prop-types"
 
 
-const SideBar = () => {
+const SideBar = ({ setShow, show }) => {
 
     const { allUser, user, logout } = AuthStore()
     const { setReciverId, getReciverUserData } = MessageStore()
@@ -15,7 +16,7 @@ const SideBar = () => {
     }
 
     return (
-        <div className=" basis-[400px] border-r border-r-slate-300 overflow-auto" style={{ scrollbarWidth: "none" }}>
+        <div className={`${show ? "hidden sm:block" : ""} sm:basis-[400px] w-full border-r border-r-slate-300 overflow-auto`} style={{ scrollbarWidth: "none" }}>
 
             <div className=" flex items-center justify-between py-2 px-2 border-b border-b-slate-300">
                 <div className=" flex items-center space-x-3">
@@ -38,7 +39,7 @@ const SideBar = () => {
             <div >
                 {
                     allUser.map((everyUser) => (
-                        <div onClick={() => { setReciverId(everyUser._id); getReciverUserData() }} key={everyUser.username} className={" flex items-center active:bg-slate-400 space-x-2 px-2 py-3 w-full border-b hover:bg-slate-50 hover:bg-opacity-10 cursor-pointer border-b-slate-400"}>
+                        <div onClick={() => { setReciverId(everyUser._id); getReciverUserData(); setShow(true) }} key={everyUser.username} className={" flex items-center active:bg-slate-400 space-x-2 px-2 py-3 w-full border-b hover:bg-slate-50 hover:bg-opacity-10 cursor-pointer border-b-slate-400"}>
                             <div className=" w-fit relative">
                                 <img className=" rounded-full bg-white w-14 h-11 object-cover object-center" src={user.profilePic} alt={user.username} />
                                 <div className={` absolute bottom-1 right-1 p-1 rounded-full ${onlineUsers.includes(everyUser._id) ? "bg-teal-500" : "bg-slate-500"} h-[5px] w-[5px]`}></div>
@@ -59,4 +60,8 @@ const SideBar = () => {
     )
 }
 
+SideBar.propTypes = {
+    setShow: PropTypes.func,
+    show: PropTypes.string
+}
 export default SideBar
