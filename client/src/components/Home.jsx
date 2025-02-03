@@ -59,7 +59,7 @@ const Home = () => {
 
                         {/* message */}
                         <div>
-                            <div ref={scrollContainerRef} className=" overflow-auto sm:h-[477px] px-4" id="chat-container" style={{ scrollbarWidth: "none" }}>
+                            <div ref={scrollContainerRef} className=" overflow-auto sm:h-[477px] h-[810px] px-4" id="chat-container" style={{ scrollbarWidth: "none" }}>
 
                                 {messages.length != 0 ? messages.map((everyMessage) => (
 
