@@ -35,7 +35,7 @@ const Home = () => {
                 <SideBar setShow={setShow} show={show} />
 
                 {
-                    reciverUserData ? <div className={`w-full ${show ? "block sm:block" : "hidden sm:block"} overflow-auto relative`}>
+                    reciverUserData ? <div ref={scrollContainerRef} id="chat-container" className={`w-full ${show ? "block sm:block" : "hidden sm:block"} overflow-auto relative`}>
 
                         <div className=" sticky top-0 bg-slate-700 w-full bottom-4">
                             <div className=" flex justify-between items-center px-4 py-2 border-b border-b-slate-300">
@@ -59,7 +59,7 @@ const Home = () => {
 
                         {/* message */}
                         <div>
-                            <div ref={scrollContainerRef} className=" overflow-auto pb-20 px-4" id="chat-container" >
+                            <div className=" overflow-auto pb-20 px-4"  >
 
                                 {messages.length != 0 ? messages.map((everyMessage) => (
 
@@ -79,7 +79,7 @@ const Home = () => {
 
                         </div>
 
-                        <div className=" flex px-4 bg-slate-700 py-2 space-x-3 sm:sticky fixed w-full bottom-0">
+                        <div className=" flex px-4 bg-slate-700 py-4 space-x-3 sm:sticky fixed w-full bottom-0">
                             <input value={message} onChange={(e) => setMessage(e.target.value)} className=" p-2 rounded-xl w-full outline-none bg-slate-100 bg-opacity-50 text-slate-800 placeholder:text-slate-800" type="text" placeholder=" Message" />
                             <svg onClick={() => { sendMessage(message); setMessage('') }} className=" p-1 rounded-full bg-emerald-400 hover:bg-emerald-500 cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m14 10l-3 3m9.288-9.969a.535.535 0 0 1 .68.681l-5.924 16.93a.535.535 0 0 1-.994.04l-3.219-7.242a.54.54 0 0 0-.271-.271l-7.242-3.22a.535.535 0 0 1 .04-.993z"></path></svg>
                         </div>
