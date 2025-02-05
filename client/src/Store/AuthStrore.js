@@ -13,6 +13,11 @@ const AuthStore = create((set, get) => ({
     setReciverId: (reciverId) => set({ reciverId: reciverId }),
     singup: async ({ username, password, profilePic }) => {
 
+        if (username, password) {
+            username.trim()
+            password.trim()
+        }
+        
         try {
             const res = await api.post(`/api/auth/singup`, {
                 username: username,
@@ -32,6 +37,11 @@ const AuthStore = create((set, get) => ({
 
     },
     login: async (username, password) => {
+
+        if (username, password) {
+            username.trim()
+            password.trim()
+        }
 
         try {
             const res = await api.post(`/api/auth/login`, {
