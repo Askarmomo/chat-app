@@ -5,8 +5,6 @@ import AuthStore from "../Store/AuthStrore"
 import MessageStore from "../Store/MessageStore"
 import { formateTime } from "../middlewares/TimeFormater"
 import SocketStore from "../Store/Socket.io.Store"
-import { Link } from "react-router-dom"
-
 
 
 const Home = () => {
@@ -18,7 +16,7 @@ const Home = () => {
 
 
 
-    const scrollContainerRef = useRef(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
 
@@ -27,7 +25,7 @@ const Home = () => {
         }
     }, [messages])
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState<boolean>(false)
 
     return (
         <div >
@@ -40,14 +38,14 @@ const Home = () => {
                         <div className=" sticky top-0 bg-slate-700 w-full bottom-4">
                             <div className=" flex justify-between items-center px-4 py-2 border-b border-b-slate-300">
                                 <div className=" flex items-center space-x-2">
-                                    <Link onClick={() => setShow(false)}>
+                                    <button onClick={() => setShow(false)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="m6.921 12.5l5.439 5.439q.146.146.153.344q.006.198-.16.363q-.164.16-.353.163q-.188.002-.354-.163l-6.08-6.08q-.131-.132-.184-.268T5.329 12t.053-.298t.184-.267l6.08-6.081q.14-.14.341-.15q.202-.01.367.15q.165.165.165.356q0 .192-.165.357L6.92 11.5H18.5q.214 0 .357.143T19 12t-.143.357t-.357.143z"></path></svg>
-                                    </Link>
+                                    </button>
                                     <div className=" flex items-center space-x-4">
                                         <img className=" h-12 w-12 rounded-full object-cover bg-white" src={reciverUserData?.profilePic} alt={reciverUserData?.username} />
                                         <div>
                                             <div className=" font-semibold">{reciverUserData?.username}</div>
-                                            <div className=" font-light">{onlineUsers.includes(reciverUserData._id) ? 'Online' : 'Ofline'}</div>
+                                            <div className=" font-light">{onlineUsers?.includes(reciverUserData._id) ? 'Online' : 'Ofline'}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -63,10 +61,10 @@ const Home = () => {
 
                                 {messages.length != 0 ? messages.map((everyMessage) => (
 
-                                    <div key={everyMessage._id} className={`flex ${everyMessage.senderId == user._id ? "justify-end" : "justify-start"} my-2`}>
-                                        <div className={`max-w-xs space-y-1 px-2 py-2 rounded-tr-2xl rounded-bl-2xl rounded-t-2xl ${everyMessage.senderId == user._id ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}>
+                                    <div key={everyMessage._id} className={`flex ${everyMessage.senderId == user?._id ? "justify-end" : "justify-start"} my-2`}>
+                                        <div className={`max-w-xs space-y-1 px-2 py-2 rounded-tr-2xl rounded-bl-2xl rounded-t-2xl ${everyMessage.senderId == user?._id ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}>
                                             <div className=" text-sm capitalize">  <span> {everyMessage.message}</span></div>
-                                            <div className={` text-xs font-light ${everyMessage.senderId == user._id ? "text-end" : " text-start"}`}> <span>{formateTime(everyMessage.createdAt)}</span></div>
+                                            <div className={` text-xs font-light ${everyMessage.senderId == user?._id ? "text-end" : " text-start"}`}> <span>{formateTime(everyMessage.createdAt)}</span></div>
                                         </div>
                                     </div>
                                 ))

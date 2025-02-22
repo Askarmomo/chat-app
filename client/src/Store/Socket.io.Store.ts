@@ -2,13 +2,20 @@ import { create } from "zustand";
 import { io } from "socket.io-client";
 import MessageStore from "./MessageStore";
 
-const SocketStore = create((set, get) => ({
+
+type socket = {
+    socket: any
+    onlineUsers: string[] | string
+
+}
+
+const SocketStore = create<socket>((set, get: any) => ({
     socket: null,
     onlineUsers: [],
-    setOnlineUsers: (onlineUsers) => {
+    setOnlineUsers: (onlineUsers: string) => {
         set({ onlineUsers: onlineUsers })
     },
-    connectSocket: (userId) => {
+    connectSocket: (userId: string) => {
         const newSocket = io('https://chat-app-62sm.onrender.com', {
             query: {
                 userId,

@@ -13,7 +13,7 @@ const App = () => {
 
   const { user, userProfile, isFetched, getAllUsers } = AuthStore()
   const { fetchMessages, reciverId, isFetchedMessage } = MessageStore()
-  const { connectSocket } = SocketStrore()
+  const { connectSocket }: any = SocketStrore()
 
   useEffect(() => {
     if (!isFetched) {
@@ -35,7 +35,7 @@ const App = () => {
     if (user) {
       connectSocket(user._id)
     }
-  }, [user,connectSocket])
+  }, [user, connectSocket])
 
 
 

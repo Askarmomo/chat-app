@@ -4,20 +4,35 @@ import { create } from "zustand"
 import toast from "react-hot-toast"
 import api from "../middlewares/Axios"
 
+type User = {
+    _id: string,
+    username: string,
+    profilePic: string,
+}
 
-const AuthStore = create((set, get) => ({
+type authStore = {
+    user: User | null;
+    isFetched: boolean;
+    allUser: User[];
+    singup: (credentials: { username: string, password: string, profilePic: string }) => Promise<void>
+    login: (username: string, password: string) => Promise<void>
+    userProfile: () => Promise<void>
+    getAllUsers: () => Promise<void>
+    logout: () => Promise<void>
+
+}
+
+const AuthStore = create<authStore>((set, get) => ({
 
     user: null,
     isFetched: false,
     allUser: [],
-    setReciverId: (reciverId) => set({ reciverId: reciverId }),
+    // setReciverId: (reciverId) => set({ reciverId: reciverId }),
     singup: async ({ username, password, profilePic }) => {
 
-        if (username, password) {
-            username.trim()
-            password.trim()
-        }
-        
+        username.trim()
+        password.trim()
+
         try {
             const res = await api.post(`/api/auth/singup`, {
                 username: username,
@@ -29,7 +44,7 @@ const AuthStore = create((set, get) => ({
                 set({ user: data })
                 toast.success('Account created successfully')
             }
-        } catch (error) {
+        } catch (error: any) {
             if (error.response) {
                 toast.error(error.response.data.error)
             }
@@ -38,10 +53,8 @@ const AuthStore = create((set, get) => ({
     },
     login: async (username, password) => {
 
-        if (username, password) {
-            username.trim()
-            password.trim()
-        }
+        username.trim()
+        password.trim()
 
         try {
             const res = await api.post(`/api/auth/login`, {
@@ -54,7 +67,7 @@ const AuthStore = create((set, get) => ({
                 toast.success('Login successfully')
             }
             // location.reload()
-        } catch (error) {
+        } catch (error: any) {
             if (error.response) {
                 toast.error(error.response.data.error)
             }
@@ -62,7 +75,7 @@ const AuthStore = create((set, get) => ({
 
     },
     userProfile: async () => {
-        if (get().isFetch) return
+        if (get().isFetched) return
         try {
             const res = await api.get(`/api/auth/userprofile`)
             const data = await res.data
@@ -71,7 +84,7 @@ const AuthStore = create((set, get) => ({
                 set({ user: data, isFetched: true })
             }
 
-        } catch (error) {
+        } catch (error:any) {
             if (error.response) {
                 console.log(error.response.data.error)
             }
@@ -84,7 +97,7 @@ const AuthStore = create((set, get) => ({
             if (data) {
                 set({ allUser: data })
             }
-        } catch (error) {
+        } catch (error:any) {
             if (error.response) {
                 toast.error(error.response.data.error)
             }
@@ -99,7 +112,7 @@ const AuthStore = create((set, get) => ({
                 set({ user: null })
             }
             location.reload()
-        } catch (error) {
+        } catch (error:any) {
             if (error.response) {
                 toast.error(error.response.data.error)
             }

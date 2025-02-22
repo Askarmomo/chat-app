@@ -1,10 +1,15 @@
 import AuthStore from "../Store/AuthStrore"
 import MessageStore from "../Store/MessageStore"
 import SocketStore from "../Store/Socket.io.Store"
-import PropTypes from "prop-types"
+import React, { Dispatch, SetStateAction } from "react"
 
 
-const SideBar = ({ setShow, show }) => {
+interface ChildProps {
+    show: boolean,
+    setShow: Dispatch<SetStateAction<boolean>>
+}
+
+const SideBar: React.FC<ChildProps> = ({ setShow, show }) => {
 
     const { allUser, user, logout } = AuthStore()
     const { setReciverId, getReciverUserData } = MessageStore()
@@ -20,10 +25,10 @@ const SideBar = ({ setShow, show }) => {
 
             <div className=" flex items-center justify-between py-2 px-2 border-b border-b-slate-300">
                 <div className=" flex items-center space-x-3">
-                    <img className=" h-11 w-11 rounded-full object-cover bg-white" src={user.profilePic} alt={user.username} />
+                    <img className=" h-11 w-11 rounded-full object-cover bg-white" src={user?.profilePic} alt={user?.username} />
                     <div>
                         <div>
-                            <span className=" font-semibold">{user.username}</span>
+                            <span className=" font-semibold">{user?.username}</span>
                         </div>
                         <div>
                             <span className=" font-light text-sm">Work</span>
@@ -41,7 +46,7 @@ const SideBar = ({ setShow, show }) => {
                     allUser.map((everyUser) => (
                         <div onClick={() => { setReciverId(everyUser._id); getReciverUserData(); setShow(true) }} key={everyUser.username} className={" flex items-center active:bg-slate-400 space-x-2 px-2 py-3 w-full border-b hover:bg-slate-50 hover:bg-opacity-10 cursor-pointer border-b-slate-400"}>
                             <div className=" w-fit relative">
-                                <img className=" rounded-full bg-white w-14 h-11 object-cover object-center" src={user.profilePic} alt={user.username} />
+                                <img className=" rounded-full bg-white w-14 h-11 object-cover object-center" src={user?.profilePic} alt={user?.username} />
                                 <div className={` absolute bottom-1 right-1 p-1 rounded-full ${onlineUsers.includes(everyUser._id) ? "bg-teal-500" : "bg-slate-500"} h-[5px] w-[5px]`}></div>
                             </div>
                             <div className=" flex items-center justify-between w-full">
@@ -58,10 +63,5 @@ const SideBar = ({ setShow, show }) => {
             </div>
         </div >
     )
-}
-
-SideBar.propTypes = {
-    setShow: PropTypes.func,
-    show: PropTypes.string
 }
 export default SideBar
